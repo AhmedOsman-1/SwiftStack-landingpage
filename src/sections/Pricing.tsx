@@ -1,142 +1,161 @@
-"use client";
-import CheckIcon from "@/assets/check.svg";
-import { twMerge } from "tailwind-merge";
-import { motion } from "framer-motion";
+'use client';
 
-const pricingTiers = [
+import avatar1 from "@/assets/avatar-1.png";
+import avatar2 from "@/assets/avatar-2.png";
+import avatar3 from "@/assets/avatar-3.png";
+import avatar4 from "@/assets/avatar-4.png";
+import avatar5 from "@/assets/avatar-5.png";
+import avatar6 from "@/assets/avatar-6.png";
+import avatar7 from "@/assets/avatar-7.png";
+import avatar8 from "@/assets/avatar-8.png";
+import avatar9 from "@/assets/avatar-9.png";
+import Image from "next/image";
+import { motion } from "framer-motion";
+import React from "react";
+import { twMerge } from "tailwind-merge";
+
+type Testimonial = {
+  text: string;
+  imageSrc: string;
+  name: string;
+  username: string;
+};
+
+const testimonials: Testimonial[] = [
   {
-    title: "Free",
-    monthlyPrice: 0,
-    buttonText: "Get started for free",
-    popular: false,
-    inverse: false,
-    features: [
-      "Up to 5 project members",
-      "Unlimited tasks and projects",
-      "2GB storage",
-      "Integrations",
-      "Basic support",
-    ],
+    text: "As a seasoned designer always on the lookout for innovative tools, Framer.com instantly grabbed my attention.",
+    imageSrc: avatar1.src,
+    name: "Jamie Rivera",
+    username: "@jamietechguru00",
   },
   {
-    title: "Pro",
-    monthlyPrice: 9,
-    buttonText: "Sign up now",
-    popular: true,
-    inverse: true,
-    features: [
-      "Up to 50 project members",
-      "Unlimited tasks and projects",
-      "50GB storage",
-      "Integrations",
-      "Priority support",
-      "Advanced support",
-      "Export support",
-    ],
+    text: "Our team's productivity has skyrocketed since we started using this tool.",
+    imageSrc: avatar2.src,
+    name: "Josh Smith",
+    username: "@jjsmith",
   },
   {
-    title: "Business",
-    monthlyPrice: 19,
-    buttonText: "Sign up now",
-    popular: false,
-    inverse: false,
-    features: [
-      "Up to 5 project members",
-      "Unlimited tasks and projects",
-      "200GB storage",
-      "Integrations",
-      "Dedicated account manager",
-      "Custom fields",
-      "Advanced analytics",
-      "Export capabilities",
-      "API access",
-      "Advanced security features",
-    ],
+    text: "This app has completely transformed how I manage my projects and deadlines.",
+    imageSrc: avatar3.src,
+    name: "Morgan Lee",
+    username: "@morganleewhiz",
+  },
+  {
+    text: "I was amazed at how quickly we were able to integrate this app into our workflow.",
+    imageSrc: avatar4.src,
+    name: "Casey Jordan",
+    username: "@caseyj",
+  },
+  {
+    text: "Planning and executing events has never been easier. This app helps me keep track of all the moving parts, ensuring nothing slips through the cracks.",
+    imageSrc: avatar5.src,
+    name: "Taylor Kim",
+    username: "@taylorkimm",
+  },
+  {
+    text: "The customizability and integration capabilities of this app are top-notch.",
+    imageSrc: avatar6.src,
+    name: "Riley Smith",
+    username: "@rileysmith1",
+  },
+  {
+    text: "Adopting this app for our team has streamlined our project management and improved communication across the board.",
+    imageSrc: avatar7.src,
+    name: "Jordan Patels",
+    username: "@jpatelsdesign",
+  },
+  {
+    text: "With this app, we can easily assign tasks, track progress, and manage documents all in one place.",
+    imageSrc: avatar8.src,
+    name: "Sam Dawson",
+    username: "@dawsontechtips",
+  },
+  {
+    text: "Its user-friendly interface and robust features support our diverse needs.",
+    imageSrc: avatar9.src,
+    name: "Casey Harper",
+    username: "@casey09",
   },
 ];
 
-export const Pricing = () => {
+const firstColumn = testimonials.slice(0, 3);
+const secondColumn = testimonials.slice(3, 6);
+const thirdColumn = testimonials.slice(6, 9);
+
+type TestimonialsColumnProps = {
+  className?: string;
+  testimonials: Testimonial[];
+  duration?: number;
+};
+
+const TestimonialsColumn: React.FC<TestimonialsColumnProps> = ({
+  className,
+  testimonials,
+  duration = 10,
+}) => {
   return (
-    <section className="py-24 bg-white">
-      <div className="container">
-        <div className="section-heading">
-          <h2 className="section-title">Pricing</h2>
-          <p className="section-description mt-5">
-            Free forever. Upgrade for unlimited tasks, better security, and
-            exclusive features.
-          </p>
-        </div>
-        <div className="flex flex-col gap-6 items-center mt-10 lg:flex-row lg:items-end lg:justify-center">
-          {pricingTiers.map(
-            ({
-              title,
-              monthlyPrice,
-              buttonText,
-              popular,
-              inverse,
-              features,
-            }) => (
+    <div className={className}>
+      <motion.div
+        animate={{ translateY: "-50%" }}
+        transition={{ duration, repeat: Infinity, ease: "linear", repeatType: "loop" }}
+        className="flex flex-col gap-6 pb-6"
+      >
+        {[...new Array(2)].fill(0).map((_, index) => (
+          <React.Fragment key={index}>
+            {testimonials.map(({ text, imageSrc, name, username }) => (
               <div
+                key={username} // ✅ Unique key added
                 className={twMerge(
-                  "card",
-                  inverse === true && "border-black bg-black text-white"
+                  "card p-4 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm transition-colors"
                 )}
               >
-                <div className="flex justify-between">
-                  <h3
-                    className={twMerge(
-                      "text-lg font-bold text-black/50",
-                      inverse === true && "text-white/60"
-                    )}
-                  >
-                    {title}
-                  </h3>
-                  {popular === true && (
-                    <div className="inline-flex text-sm px-4 py-1.5 rounded-xl border border-white/20">
-                      <motion.span
-                        animate={{
-                          backgroundPositionX: "100%",
-                        }}
-                        transition={{
-                          duration: 1,
-                          repeat: Infinity,
-                          ease: "linear",
-                          repeatType: "loop",
-                        }}
-                        className="bg-[linear-gradient(to_right,#DD7DDF,#E1CD86,#BBCB92,#71C2EF,#3BFFFF,#DD7DDF,#E1CD86,#BBCB92,#71C2EF,#3BFFFF,#DD7DDF)] [background-size:200%] text-transparent bg-clip-text font-medium"
-                      >
-                        Popular
-                      </motion.span>
+                <div className="text-gray-800 dark:text-gray-200">{text}</div>
+                <div className="flex items-center gap-2 mt-5">
+                  <Image
+                    className="w-10 h-10 rounded-full"
+                    src={imageSrc}
+                    alt={name}
+                    width={40}
+                    height={40}
+                  />
+                  <div className="flex flex-col">
+                    <div className="font-medium tracking-tight leading-5 text-gray-900 dark:text-white">
+                      {name}
                     </div>
-                  )}
+                    <div className="leading-5 tracking-tight text-gray-600 dark:text-gray-300">
+                      {username}
+                    </div>
+                  </div>
                 </div>
-                <div className="flex items-baseline gap-1 mt-[30px]">
-                  <span className="text-4xl font-bold tracking-tighter leading-none">
-                    ${monthlyPrice}
-                  </span>
-                  <span className="tracking-tight font-bold text-black/50">
-                    /month
-                  </span>
-                </div>
-                <button
-                  className={twMerge(
-                    "btn btn-primary w-full mt-[30px]",
-                    inverse === true && "bg-white text-black"
-                  )}
-                >
-                  {buttonText}
-                </button>
-                <ul className="flex flex-col gap-5 mt-8">
-                  {features.map((feature) => (
-                    <li className="text-sm flex items-center gap-4">
-                      <CheckIcon className="h-6 w-6" />
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
               </div>
-            )
-          )}
+            ))}
+          </React.Fragment>
+        ))}
+      </motion.div>
+    </div>
+  );
+};
+
+export const Testimonials: React.FC = () => {
+  return (
+    <section className="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+      <div className="container mx-auto px-4">
+        <div className="section-heading">
+          <div className="flex justify-center">
+            <div className="tag text-gray-700 dark:text-gray-300">Testimonials</div>
+          </div>
+          <h2 className="section-title mt-5 text-gray-900 dark:text-white">
+            What Our Users Say
+          </h2>
+          <p className="section-description mt-5 text-gray-600 dark:text-gray-300">
+            From intuitive design to powerful features, our app has become an essential tool for users around the world.
+          </p>
+        </div>
+
+        <div className="flex justify-center gap-6 mt-10 max-h-[738px] overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,black_25%,black_75%,transparent)]">
+          <TestimonialsColumn testimonials={firstColumn} duration={25} />
+          <TestimonialsColumn testimonials={secondColumn} className="hidden md:block" duration={20} />
+          <TestimonialsColumn testimonials={thirdColumn} className="hidden lg:flex" duration={17} />
         </div>
       </div>
     </section>
